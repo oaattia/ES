@@ -24,7 +24,9 @@ class Elasticsearch implements ElasticSearchContract
     }
 
     /**
+     * @param $hosts
      * @return Client
+     * @throws InvalidDataException
      */
     public function buildClient($hosts)
     {
