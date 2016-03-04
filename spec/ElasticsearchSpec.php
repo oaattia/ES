@@ -4,7 +4,6 @@ namespace spec\Oaattia\Elasticsearch;
 
 use Elasticsearch\Client;
 use Oaattia\Elasticsearch\Contracts\ElasticSearchContract;
-use Oaattia\Elasticsearch\Elasticsearch;
 use Oaattia\Elasticsearch\Exceptions\InvalidDataException;
 use PhpSpec\ObjectBehavior;
 
@@ -29,7 +28,6 @@ class ElasticsearchSpec extends ObjectBehavior
     {
         $hosts = $this->getHosts();
         $this->handleHosts($hosts);
-        $this->hosts->shouldBe($hosts);
     }
 
     public function it_should_throw_exception_if_hosts_empty()
@@ -61,9 +59,6 @@ class ElasticsearchSpec extends ObjectBehavior
         ];
         return $hosts;
 
-        // we want to
-        //        $client = new Elasticsearch();
-        //        $client->buildClient()
     }
 
 }

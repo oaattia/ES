@@ -11,17 +11,11 @@ class Elasticsearch implements ElasticSearchContract
 {
 
     /**
-     * @var
-     */
-    public $hosts = [];
-
-    /**
      * @var Client
      */
     protected $client;
 
     /**
-     * Elasticsearch constructor.
      * @param Client $client
      */
     public function __construct(Client $client)
@@ -34,12 +28,13 @@ class Elasticsearch implements ElasticSearchContract
      */
     public function buildClient($hosts)
     {
-        $this->handleHosts($hosts);
-        return ClientBuilder::create()->setHosts($this->hosts)->build();
+        $returnedHosts = $this->handleHosts($hosts);
+        return ClientBuilder::create()->setHosts($returnedHosts)->build();
     }
 
     /**
      * @param mixed $hosts
+     * @return mixed
      * @throws InvalidDataException
      */
     public function handleHosts($hosts)
@@ -52,7 +47,7 @@ class Elasticsearch implements ElasticSearchContract
             throw new InvalidDataException("Must be array only");
         }
 
-        $this->hosts = $hosts;
+        return $hosts;
     }
 
 }

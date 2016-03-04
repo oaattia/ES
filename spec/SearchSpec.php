@@ -13,7 +13,7 @@ class SearchSpec extends ObjectBehavior
 
     public function __construct()
     {
-        $this->query = [];
+        $this->query = ['search'];
     }
 
     public function let(Client $client)
@@ -32,12 +32,11 @@ class SearchSpec extends ObjectBehavior
         $this->searchByQuery($this->query);
     }
 
-    public function it_can_handle_search_by_term(Client $client)
+    public function it_can_handle_search_by_term()
     {
-        $this->shouldThrow(new InvalidDataException("Must be string only"))->during('searchByterm', array(['search']));
+        $this->shouldThrow(new InvalidDataException("Must be array only."))->during('searchByterm', array('search'));
 
-        $client->search($this->query)->shouldBeCalled();
-        $this->searchByTerm();
+        $this->searchByTerm($this->query);
     }
 
 }

@@ -3,6 +3,7 @@
 namespace Oaattia\Elasticsearch;
 
 use Elasticsearch\Client;
+use Oaattia\Elasticsearch\Exceptions\InvalidDataException;
 
 class Search
 {
@@ -28,8 +29,17 @@ class Search
         $this->client->search($query);
     }
 
+    /**
+     * @param $term
+     * @throws InvalidDataException
+     */
     public function searchByTerm($term)
     {
+        if (!is_array($term)) {
+            throw new InvalidDataException('Must be array only.');
+        }
 
+        $results = $this->searchByQuery($term);
+        return $results;
     }
 }
