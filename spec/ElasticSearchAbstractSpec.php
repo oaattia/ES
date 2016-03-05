@@ -7,7 +7,7 @@ use Oaattia\Elasticsearch\Abstracts\ElasticsearchAbstract;
 use Oaattia\Elasticsearch\Exceptions\InvalidDataException;
 use PhpSpec\ObjectBehavior;
 
-class SearchSpec extends ObjectBehavior
+class ElasticSearchAbstractSpec extends ObjectBehavior
 {
     public function let()
     {
