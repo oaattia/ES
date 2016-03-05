@@ -3,40 +3,39 @@
 namespace spec\Oaattia\Elasticsearch;
 
 use Elasticsearch\Client;
+use Oaattia\Elasticsearch\Abstracts\ElasticsearchAbstract;
 use Oaattia\Elasticsearch\Exceptions\InvalidDataException;
 use PhpSpec\ObjectBehavior;
 
 class SearchSpec extends ObjectBehavior
 {
-
-    protected $query;
-
-    public function __construct()
+    public function let()
     {
-        $this->query = ['search'];
+        $this->beAnInstanceOf(SearchStub::class);
+        $this->beConstructedWith(Client::class);
     }
 
-    public function let(Client $client)
+    public function it_should_handle_build_the_client()
     {
-        $this->beConstructedWith($client);
+        $this->handleHosts(['192.168.1.1:9200']);
+        $this->buildClient(['192.168.1.1:9200']);
     }
 
-    public function it_is_initializable()
+    public function it_should_handle_passed_hosts()
     {
-        $this->shouldHaveType('Oaattia\Elasticsearch\Search');
+        $this->shouldThrow(new InvalidDataException("Can't provide empty value."))->during('handleHosts', ['']);
+        $this->shouldThrow(new InvalidDataException("Must be array only."))->during('handleHosts', ['asdasd']);
     }
 
-    public function it_can_handle_search(Client $client)
+}
+
+class SearchStub extends ElasticsearchAbstract
+{
+
+    /**
+     * SearchStub constructor.
+     */
+    public function __construct(Client $client)
     {
-        $client->search($this->query)->shouldBeCalled();
-        $this->searchByQuery($this->query);
     }
-
-    public function it_can_handle_search_by_term()
-    {
-        $this->shouldThrow(new InvalidDataException("Must be array only."))->during('searchByterm', array('search'));
-
-        $this->searchByTerm($this->query);
-    }
-
 }
